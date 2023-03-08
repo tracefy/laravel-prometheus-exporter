@@ -21,7 +21,7 @@ class StorageAdapterFactoryTest extends TestCase
      */
     private $factory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->factory = new StorageAdapterFactory();

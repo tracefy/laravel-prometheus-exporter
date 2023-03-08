@@ -32,7 +32,7 @@ class MetricsControllerTest extends TestCase
      */
     private $controller;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

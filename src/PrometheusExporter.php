@@ -14,25 +14,12 @@ use Prometheus\MetricFamilySamples;
 class PrometheusExporter
 {
     /**
-     * @var string
-     */
-    protected $namespace;
-
-    /**
-     * @var CollectorRegistry
-     */
-    protected $prometheus;
-
-    /**
      * @var array
      */
     protected $collectors = [];
 
-    public function __construct(string $namespace, CollectorRegistry $prometheus, array $collectors = [])
+    public function __construct(protected string $namespace, protected CollectorRegistry $prometheus, array $collectors = [])
     {
-        $this->namespace = $namespace;
-        $this->prometheus = $prometheus;
-
         foreach ($collectors as $collector) {
             /* @var CollectorInterface $collector */
             $this->registerCollector($collector);
@@ -62,7 +49,7 @@ class PrometheusExporter
     {
         $name = $collector->getName();
 
-        if (! isset($this->collectors[$name])) {
+        if (!isset($this->collectors[$name])) {
             $this->collectors[$name] = $collector;
 
             $collector->registerMetrics($this);
@@ -80,11 +67,11 @@ class PrometheusExporter
     /**
      * Return a collector by name.
      *
-     * @param  string  $name
+     * @param string $name
      */
     public function getCollector($name): CollectorInterface
     {
-        if (! isset($this->collectors[$name])) {
+        if (!isset($this->collectors[$name])) {
             throw new InvalidArgumentException(sprintf('The collector "%s" is not registered.', $name));
         }
 
@@ -94,9 +81,9 @@ class PrometheusExporter
     /**
      * Register a counter.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
+     * @param string $name
+     * @param string $help
+     * @param array $labels
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#counter
      */
@@ -108,7 +95,7 @@ class PrometheusExporter
     /**
      * Return a counter.
      *
-     * @param  string  $name
+     * @param string $name
      */
     public function getCounter($name): Counter
     {
@@ -118,9 +105,9 @@ class PrometheusExporter
     /**
      * Return or register a counter.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
+     * @param string $name
+     * @param string $help
+     * @param array $labels
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#counter
      */
@@ -132,9 +119,9 @@ class PrometheusExporter
     /**
      * Register a gauge.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
+     * @param string $name
+     * @param string $help
+     * @param array $labels
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#gauge
      */
@@ -146,7 +133,7 @@ class PrometheusExporter
     /**
      * Return a gauge.
      *
-     * @param  string  $name
+     * @param string $name
      */
     public function getGauge($name): Gauge
     {
@@ -156,9 +143,9 @@ class PrometheusExporter
     /**
      * Return or register a gauge.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
+     * @param string $name
+     * @param string $help
+     * @param array $labels
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#gauge
      */
@@ -170,10 +157,10 @@ class PrometheusExporter
     /**
      * Register a histogram.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
-     * @param  array  $buckets
+     * @param string $name
+     * @param string $help
+     * @param array $labels
+     * @param array $buckets
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#histogram
      */
@@ -185,7 +172,7 @@ class PrometheusExporter
     /**
      * Return a histogram.
      *
-     * @param  string  $name
+     * @param string $name
      */
     public function getHistogram($name): Histogram
     {
@@ -195,10 +182,10 @@ class PrometheusExporter
     /**
      * Return or register a histogram.
      *
-     * @param  string  $name
-     * @param  string  $help
-     * @param  array  $labels
-     * @param  array  $buckets
+     * @param string $name
+     * @param string $help
+     * @param array $labels
+     * @param array $buckets
      *
      * @see https://prometheus.io/docs/concepts/metric_types/#histogram
      */

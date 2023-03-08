@@ -10,14 +10,8 @@ use Prometheus\Histogram;
 
 class GuzzleMiddleware
 {
-    /**
-     * @var Histogram
-     */
-    private $histogram;
-
-    public function __construct(Histogram $histogram)
+    public function __construct(private Histogram $histogram)
     {
-        $this->histogram = $histogram;
     }
 
     /**

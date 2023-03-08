@@ -16,9 +16,9 @@ class DatabaseServiceProvider extends ServiceProvider
     {
         DB::listen(function ($query) {
             $querySql = '[omitted]';
-            $type = strtoupper(strtok((string) $query->sql, ' '));
+            $type = strtoupper(strtok((string)$query->sql, ' '));
             if (config('prometheus.collect_full_sql_query')) {
-                $querySql = $this->cleanupSqlString((string) $query->sql);
+                $querySql = $this->cleanupSqlString((string)$query->sql);
             }
             $labels = array_values(array_filter([
                 $querySql,
