@@ -153,7 +153,6 @@ and can also be changed using the `PROMETHEUS_METRICS_ROUTE_PATH` environment va
 A collector is a class, implementing the [CollectorInterface](src/CollectorInterface.php), which is responsible for
 collecting data for one or many metrics.
 
-Please see the [Example](#Collector) included below.
 
 You can auto-load your collectors by adding them to the `collectors` array in the `prometheus.php` config.
 
