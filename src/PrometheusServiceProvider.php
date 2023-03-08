@@ -17,9 +17,6 @@ class PrometheusServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/../config/prometheus.php' => $this->configPath('prometheus.php'),
-        ]);
         $this->loadRoutes();
     }
 
@@ -28,7 +25,7 @@ class PrometheusServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/prometheus.php', 'prometheus');
+        $this->mergeConfigFrom(__DIR__ . '/../config/prometheus.php', 'prometheus');
 
         $this->app->singleton(PrometheusExporter::class, function ($app) {
             $adapter = $app['prometheus.storage_adapter'];
@@ -73,7 +70,7 @@ class PrometheusServiceProvider extends ServiceProvider
 
     private function loadRoutes()
     {
-        if (! config('prometheus.metrics_route_enabled')) {
+        if (!config('prometheus.metrics_route_enabled')) {
             return;
         }
 
@@ -86,19 +83,19 @@ class PrometheusServiceProvider extends ServiceProvider
                 config('prometheus.metrics_route_path'),
                 [
                     'as' => 'metrics',
-                    'uses' => MetricsController::class.'@getMetrics',
+                    'uses' => MetricsController::class . '@getMetrics',
                 ]
             );
         } else {
             $router->get(
                 config('prometheus.metrics_route_path'),
-                MetricsController::class.'@getMetrics'
+                MetricsController::class . '@getMetrics'
             )->name('metrics');
         }
     }
 
     private function configPath($path): string
     {
-        return $this->app->basePath().($path ? DIRECTORY_SEPARATOR.$path : '');
+        return $this->app->basePath() . ($path ? DIRECTORY_SEPARATOR . $path : '');
     }
 }
