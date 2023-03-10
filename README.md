@@ -1,6 +1,6 @@
 # Laravel Prometheus Exporter
 
-A prometheus exporter package for Laravel and Lumen.
+A prometheus exporter package for Laravel.
 
 ## Introduction
 
